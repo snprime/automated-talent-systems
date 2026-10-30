@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A job seeker's guide to LinkedIn's recruiting process and New York City's applicant oversight. An offline, qualitative comparison.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light">
+  <title>Automated Talent Systems — Behind the shortlist</title>
+  <style>
+    :root {
+      --paper: #f3f1e9;
+      --white: #fffef9;
+      --ink: #182e55;
+      --muted: #526078;
+      --line: #c4c9cd;
+      --blue: #dfe9f7;
+      --blue-ink: #234c88;
+      --yellow: #ede8a4;
+      --rust: #8b412c;
+      --dark-line: #526583;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 24px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    button, summary, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    a:hover { text-decoration-thickness: 2px; }
+    button { font: inherit; }
+    button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--rust); outline-offset: 5px; }
+    .system a:focus-visible { outline-color: var(--yellow); }
+    [hidden] { display: none !important; }
+    .wrap { width: min(1240px, 100% - 96px); margin-inline: auto; }
+    .mono { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; }
+    .skip { position: absolute; left: 24px; top: -100px; padding: 12px 18px; z-index: 20; background: var(--yellow); color: var(--ink); }
+    .skip:focus { top: 12px; }
+    header { border-bottom: 1px solid var(--line); }
+    .masthead { min-height: 86px; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .wordmark { display: flex; align-items: center; gap: 13px; font-size: 13px; font-weight: 800; letter-spacing: .04em; line-height: 1.2; }
+    .symbol { display: grid; grid-template-columns: 9px 9px; grid-template-rows: 9px 9px; gap: 3px; transform: rotate(-10deg); }
+    .symbol i { background: var(--ink); }
+    .symbol i:last-child { background: var(--rust); border-radius: 50%; }
+    nav { display: flex; gap: 30px; font-size: 13px; font-weight: 600; }
+    nav a { text-decoration: none; padding-block: 10px; }
+    nav a:hover { text-decoration: underline; }
+    .edition { color: var(--muted); }
+    .hero { display: grid; grid-template-columns: 1.6fr 1fr; gap: 50px; padding-block: 56px 45px; align-items: end; }
+    .kicker { display: flex; align-items: center; gap: 12px; margin: 0 0 24px; }
+    .kicker:before { content: ""; width: 24px; height: 2px; background: var(--rust); }
+    h1 { font-size: clamp(64px, 7.6vw, 106px); font-weight: 750; letter-spacing: -.075em; line-height: .98; margin: 0; }
+    h1 span { display: block; color: var(--blue-ink); }
+    .hero-copy { padding-bottom: 4px; max-width: 355px; }
+    .hero-copy p { font-size: 19px; line-height: 1.6; margin: 0 0 25px; }
+    .jump { display: inline-flex; gap: 14px; align-items: center; font-weight: 650; font-size: 13px; text-decoration: none; }
+    .jump span { display: grid; place-items: center; width: 35px; height: 35px; border: 1px solid var(--ink); border-radius: 50%; font-size: 19px; }
+    .scope-strip { display: grid; grid-template-columns: 1.05fr 1.3fr 1fr; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line); margin-bottom: 54px; }
+    .scope-strip div { padding: 17px 20px; border-right: 1px solid var(--line); }
+    .scope-strip div:first-child { padding-left: 0; }
+    .scope-strip div:last-child { border-right: 0; }
+    .scope-strip span { display: block; color: var(--muted); margin-bottom: 5px; }
+    .scope-strip strong { font-weight: 600; font-size: 13px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 23px; }
+    .section-number { color: var(--muted); display: block; margin-bottom: 10px; }
+    h2 { font-size: clamp(28px, 3.2vw, 39px); line-height: 1.15; letter-spacing: -.045em; font-weight: 650; margin: 0; }
+    .view-control { display: flex; align-items: center; gap: 3px; padding: 4px; border: 1px solid var(--line); border-radius: 5px; }
+    .view-control button { font-size: 12px; font-weight: 600; border: 0; color: var(--ink); cursor: pointer; background: transparent; padding: 10px 15px; border-radius: 2px; min-height: 42px; }
+    .view-control button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+    .view-control button[aria-pressed="false"]:hover { background: #e2e3df; }
+    .map { margin: 0; border: 1px solid var(--ink); border-radius: 8px; overflow: clip; }
+    .map-label { background: var(--yellow); padding: 12px 26px; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+    .map-label .mono:last-child { font-size: 10px; }
+    .lens { padding: 27px 27px 22px; }
+    .system { background: var(--ink); color: var(--white); }
+    .lens-head { display: flex; justify-content: space-between; gap: 24px; align-items: start; margin-bottom: 23px; }
+    .lens-name { display: flex; gap: 14px; align-items: center; }
+    .lens-icon { border: 1px solid currentColor; width: 40px; height: 40px; display: grid; place-items: center; flex: 0 0 auto; font-size: 22px; border-radius: 50%; }
+    .lens-head h3 { font-size: 21px; font-weight: 600; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 4px; }
+    .lens-head p { font-size: 12px; margin: 0; }
+    .system .lens-head p { color: #ced9eb; }
+    .source-tag { padding: 6px 0 6px 14px; border-left: 1px solid currentColor; font-size: 11px; line-height: 1.5; min-width: 126px; }
+    .source-tag strong { display: block; font-weight: 650; }
+    .pipeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 0; margin: 0; }
+    .pipeline li { position: relative; border-top: 1px solid var(--dark-line); padding: 17px 6px 15px 0; }
+    .pipeline li:not(:last-child):after { content: "→"; position: absolute; right: -17px; top: 31px; font-size: 21px; color: var(--yellow); }
+    .step { display: block; color: var(--yellow); font-size: 10px; margin-bottom: 10px; }
+    .pipeline h4, .checkpoints h4 { font-size: 17px; font-weight: 650; letter-spacing: -.02em; line-height: 1.3; margin: 0 0 9px; }
+    .pipeline p { color: #d5deed; font-size: 14px; margin: 0; line-height: 1.65; }
+    .lens-foot { border-top: 1px solid var(--dark-line); margin: 18px 0 0; padding-top: 13px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 11px; }
+    .lens-foot a { font-weight: 600; }
+    .oversight { background: var(--white); border-top: 1px solid var(--ink); }
+    .oversight .lens-head p { color: var(--muted); }
+    .oversight .lens-icon { color: var(--rust); }
+    .checkpoints { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 0; }
+    .checkpoints li { border: 1px solid var(--line); border-top: 3px solid var(--ink); padding: 17px 16px; background: var(--paper); }
+    .checkpoint-type { color: var(--rust); margin-bottom: 12px; display: block; font-size: 10px; }
+    .checkpoints p { font-size: 14px; line-height: 1.65; margin: 0; color: var(--muted); }
+    .checkpoints li:last-child { background: #f6e7dc; border-top-color: var(--rust); }
+    .oversight .lens-foot { border-top-color: var(--line); color: var(--muted); }
+    .oversight .lens-foot a { color: var(--ink); }
+    .map figcaption { background: var(--paper); padding: 17px 26px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .map figcaption strong { color: var(--ink); font-weight: 650; }
+    .view-status { font-size: 11px; color: var(--muted); text-align: right; margin: 10px 0 0; }
+    .evidence { padding-block: 50px; }
+    .evidence-heading { display: flex; align-items: baseline; gap: 28px; margin-bottom: 25px; }
+    .evidence-heading .section-number { margin: 0; }
+    .evidence-heading h2 { font-size: 25px; }
+    .evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
+    .finding { border-top: 1px solid var(--ink); padding-top: 20px; display: grid; grid-template-columns: 40px 1fr; gap: 13px; }
+    .finding-mark { color: var(--blue-ink); font-family: Georgia, serif; font-size: 34px; font-style: italic; line-height: 1; }
+    .finding h3 { font-size: 23px; letter-spacing: -.04em; line-height: 1.2; margin: 0 0 12px; font-weight: 650; }
+    .finding p { margin: 0 0 15px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .finding a { font-size: 12px; font-weight: 600; }
+    .discussion { position: relative; display: grid; grid-template-columns: .75fr 2fr; gap: 45px; padding: 37px 38px; border: 1px solid var(--ink); background: var(--yellow); border-radius: 8px; }
+    .discussion .section-number { color: var(--ink); }
+    .discussion h2 { font-size: 25px; }
+    .discussion .question { font-size: clamp(24px, 2.7vw, 34px); line-height: 1.35; letter-spacing: -.04em; font-weight: 550; margin: 0; }
+    .discussion .context { margin: 18px 0 0; font-size: 12px; line-height: 1.6; max-width: 580px; }
+    .notes { display: grid; grid-template-columns: .75fr 2fr; gap: 45px; padding-block: 48px; }
+    .notes h2 { font-size: 25px; }
+    .notes-intro { color: var(--muted); font-size: 13px; max-width: 200px; margin-top: 13px; }
+    details { border-top: 1px solid var(--line); }
+    details:last-child { border-bottom: 1px solid var(--line); }
+    summary { display: flex; list-style: none; justify-content: space-between; align-items: center; gap: 20px; font-size: 14px; font-weight: 600; min-height: 64px; padding-block: 17px; cursor: pointer; }
+    summary::-webkit-details-marker { display: none; }
+    summary:after { content: "+"; font-size: 21px; font-weight: 400; flex-shrink: 0; width: 26px; text-align: center; }
+    details[open] summary:after { content: "−"; }
+    .note-content { padding: 0 26px 20px 0; }
+    .note-content p, .note-content li { font-size: 14px; line-height: 1.75; color: var(--muted); }
+    .note-content p { margin: 0 0 15px; }
+    .note-content p:last-child { margin-bottom: 0; }
+    .note-content strong { color: var(--ink); font-weight: 650; }
+    .sources { margin: 0; padding-left: 20px; }
+    .sources li { padding-left: 5px; margin-bottom: 17px; }
+    .sources a { color: var(--ink); font-weight: 600; }
+    .sources span { display: block; font-size: 12px; margin-top: 4px; }
+    footer { border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; justify-content: space-between; gap: 20px; padding-block: 22px; color: var(--muted); font-size: 11px; }
+    .footer-inner strong { font-weight: 600; color: var(--ink); }
+    @media (min-width: 1450px) { .hero { padding-top: 68px; } }
+    @media (max-width: 1050px) {
+      .wrap { width: calc(100% - 56px); }
+      .hero { gap: 30px; grid-template-columns: 1.45fr 1fr; }
+      .hero-copy p { font-size: 17px; }
+      .pipeline, .checkpoints { gap: 18px; }
+      .checkpoints li { padding: 15px 12px; }
+      .pipeline h4, .checkpoints h4 { font-size: 16px; }
+      .section-heading { flex-wrap: wrap; }
+      .edition { display: none; }
+      .evidence-grid { gap: 30px; }
+    }
+    @media (max-width: 760px) {
+      .wrap { width: calc(100% - 40px); }
+      .masthead { min-height: 74px; gap: 15px; }
+      nav { gap: 17px; font-size: 12px; }
+      .wordmark { font-size: 11px; gap: 10px; }
+      .hero { grid-template-columns: 1fr; padding-block: 36px 28px; gap: 26px; }
+      h1 { font-size: clamp(65px, 13.7vw, 95px); }
+      .hero-copy { max-width: 540px; }
+      .hero-copy p { font-size: 17px; margin-bottom: 19px; }
+      .kicker { font-size: 10px; margin-bottom: 21px; }
+      .scope-strip { grid-template-columns: 1fr 1fr; margin-bottom: 38px; }
+      .scope-strip div { padding: 15px 0; }
+      .scope-strip div:first-child { grid-column: 1 / -1; border-bottom: 1px solid var(--line); border-right: 0; display: flex; align-items: baseline; gap: 14px; }
+      .scope-strip div:nth-child(2) { padding-right: 13px; }
+      .scope-strip div:last-child { padding-left: 16px; }
+      .scope-strip span { font-size: 10px; }
+      .scope-strip strong { font-size: 12px; }
+      .section-heading { gap: 19px; }
+      .section-number { font-size: 10px; }
+      .view-control { width: 100%; }
+      .view-control button { flex: 1; padding-inline: 8px; }
+      .map-label { padding: 12px 18px; }
+      .map-label .mono { font-size: 10px; }
+      .map-label .mono:last-child { display: none; }
+      .lens { padding: 23px 20px 20px; }
+      .lens-head { gap: 12px; }
+      .lens-name { gap: 10px; }
+      .lens-icon { width: 32px; height: 32px; font-size: 18px; }
+      .lens-head h3 { font-size: 19px; }
+      .lens-head p { font-size: 11px; }
+      .source-tag { min-width: auto; font-size: 10px; padding-left: 10px; }
+      .pipeline { grid-template-columns: 1fr; gap: 22px; margin-left: 13px; padding-left: 26px; border-left: 1px solid var(--dark-line); }
+      .pipeline li { padding: 0; border: 0; }
+      .pipeline li:before { content: ""; position: absolute; left: -32px; top: 4px; width: 10px; height: 10px; border: 1px solid var(--yellow); border-radius: 50%; background: var(--ink); }
+      .pipeline li:not(:last-child):after { display: none; }
+      .step { margin-bottom: 4px; }
+      .pipeline h4 { font-size: 17px; margin-bottom: 5px; }
+      .pipeline p { font-size: 14px; }
+      .checkpoints { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .checkpoints h4 { font-size: 16px; }
+      .checkpoints p { font-size: 13px; }
+      .checkpoint-type { font-size: 9px; }
+      .map figcaption { padding: 17px 20px; }
+      .view-status { text-align: left; }
+      .evidence { padding-block: 37px; }
+      .evidence-heading { display: block; }
+      .evidence-heading .section-number { margin-bottom: 10px; }
+      .evidence-grid { grid-template-columns: 1fr; gap: 28px; }
+      .finding { grid-template-columns: 30px 1fr; gap: 10px; }
+      .finding h3 { font-size: 22px; }
+      .discussion { grid-template-columns: 1fr; gap: 22px; padding: 27px 23px; }
+      .discussion h2 { font-size: 23px; }
+      .notes { grid-template-columns: 1fr; gap: 22px; padding-block: 35px; }
+      .notes-intro { max-width: none; margin-bottom: 0; }
+      .footer-inner { flex-direction: column; gap: 5px; }
+    }
+    @media (max-width: 380px) {
+      .wrap { width: calc(100% - 32px); }
+      nav { gap: 12px; }
+      nav a:last-child { display: none; }
+      .checkpoints { grid-template-columns: 1fr; }
+      .lens-head { flex-wrap: wrap; }
+      .source-tag { margin-left: 42px; }
+      h1 { font-size: 61px; }
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .view-control button { transition: color .15s ease, background-color .15s ease; }
+      .jump span { transition: transform .15s ease; }
+      .jump:hover span { transform: translateY(3px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *:before, *:after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+    @media print {
+      :root { --paper: #fff; }
+      .wrap { width: 100%; }
+      .skip, nav, .view-control, .view-status, .jump { display: none; }
+      .hero { padding-block: 25px; }
+      h1 { font-size: 65px; }
+      .scope-strip { margin-bottom: 25px; }
+      .lens[hidden] { display: block !important; }
+      .system { background: white; color: var(--ink); }
+      .system .lens-head p, .pipeline p, .step { color: var(--ink); }
+      .pipeline li:not(:last-child):after { color: var(--ink); }
+      .lens, .finding, .discussion { break-inside: avoid; }
+      details > .note-content { display: block !important; }
+      summary:after { display: none; }
+      .notes { display: block; }
+      .notes-intro { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#comparison">Skip to the comparison</a>
+  <header>
+    <div class="wrap masthead">
+      <div class="wordmark"><span class="symbol" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>TALENT<br>SYSTEMS</span></div>
+      <span class="mono edition">A field guide for job seekers</span>
+      <nav aria-label="Page sections"><a href="#comparison">Compare</a><a href="#evidence">Evidence</a><a href="#sources">Sources</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="mono kicker">Automated Talent Systems / Option 02</p>
+        <h1 id="page-title">Behind the<span>shortlist.</span></h1>
+      </div>
+      <div class="hero-copy">
+        <p>How does a profile become a match—and what can an applicant learn about the process?</p>
+        <a class="jump" href="#comparison"><span aria-hidden="true">↓</span> Explore two perspectives</a>
+      </div>
+    </section>
+
+    <div class="scope-strip" aria-label="Comparison scope">
+      <div><span class="mono">The format</span><strong>Qualitative comparison · No scores</strong></div>
+      <div><span class="mono">LinkedIn · 2025 + 2026</span><strong>Platform engineering descriptions</strong></div>
+      <div><span class="mono">NYC · 2023</span><strong>New York City regulator FAQ</strong></div>
+    </div>
+
+    <section id="comparison" aria-labelledby="comparison-heading">
+      <div class="section-heading">
+        <div><span class="mono section-number">01 / Explore the comparison</span><h2 id="comparison-heading">The machinery. The visibility.</h2></div>
+        <div class="view-control" role="group" aria-label="Choose a comparison view" hidden>
+          <button type="button" data-view="both" aria-pressed="true" aria-controls="system-lens oversight-lens">Compare both</button>
+          <button type="button" data-view="system" aria-pressed="false" aria-controls="system-lens oversight-lens">The system</button>
+          <button type="button" data-view="oversight" aria-pressed="false" aria-controls="system-lens oversight-lens">The applicant</button>
+        </div>
+      </div>
+
+      <figure class="map" aria-labelledby="map-title" aria-describedby="map-caption">
+        <div class="map-label"><span class="mono" id="map-title">Process, not quantitative</span><span class="mono">Two lenses · Different questions</span></div>
+        <article class="lens system" id="system-lens" aria-labelledby="system-heading">
+          <div class="lens-head">
+            <div class="lens-name"><span class="lens-icon" aria-hidden="true">↗</span><div><h3 id="system-heading">Inside the system</h3><p>LinkedIn · Simplified technical process</p></div></div>
+            <div class="source-tag"><strong>Sources: 2025, 2026</strong>Platform scope</div>
+          </div>
+          <ol class="pipeline" aria-label="Simplified LinkedIn process, in sequence">
+            <li><span class="mono step">Define</span><h4>Describe the role</h4><p>Recruiter requirements become structured role details and qualifications.</p></li>
+            <li><span class="mono step">Retrieve</span><h4>Find potential matches</h4><p>Semantic search works alongside other candidate sourcing strategies.</p></li>
+            <li><span class="mono step">Evaluate</span><h4>Blend, rank & assess</h4><p>Results are re-ranked, then evaluated for fit by a large language model (LLM).</p></li>
+            <li><span class="mono step">Present</span><h4>Show the recruiter</h4><p>Candidate matches and explanations support recruiter review.</p></li>
+          </ol>
+          <div class="lens-foot"><span>Vendor-described architecture · Not a NYC-specific study</span><span><a href="https://www.linkedin.com/blog/engineering/ai/how-we-engineered-linkedins-hiring-assistant">2025 architecture ↗</a> &nbsp; / &nbsp; <a href="https://www.linkedin.com/blog/engineering/ai/semantic-search-for-ai-agents-at-scale-retrieval-and-ranking-for-linkedins-hiring-assistant">2026 search ↗</a></span></div>
+        </article>
+
+        <article class="lens oversight" id="oversight-lens" aria-labelledby="oversight-heading">
+          <div class="lens-head">
+            <div class="lens-name"><span class="lens-icon" aria-hidden="true">◎</span><div><h3 id="oversight-heading">From the applicant’s side</h3><p>NYC · Oversight checkpoints, not matching stages</p></div></div>
+            <div class="source-tag"><strong>Source: 2023</strong>New York City, US</div>
+          </div>
+          <ul class="checkpoints" aria-label="NYC oversight checkpoints; not paired with the technical stages">
+            <li><span class="mono checkpoint-type">Scope</span><h4>Is the use covered?</h4><p>Coverage depends on the tool, its decision-making role and its NYC connection.</p></li>
+            <li><span class="mono checkpoint-type">Audit</span><h4>Look for the summary</h4><p>Covered use requires an independent bias audit and a published results summary.</p></li>
+            <li><span class="mono checkpoint-type">Notice</span><h4>Know what is assessed</h4><p>Covered NYC-resident candidates receive notice of tool use and assessed qualifications.</p></li>
+            <li><span class="mono checkpoint-type">Boundary</span><h4>Before an application</h4><p>Sourcing people who have not applied for a specific job is outside these audit and notice requirements.</p></li>
+          </ul>
+          <div class="lens-foot"><span>Separate oversight questions—not equivalent software steps</span><a href="https://www.nyc.gov/site/dca/businesses/faq-automated-employment-decision-tools.page">NYC DCWP · 2023 FAQ ↗</a></div>
+        </article>
+        <figcaption id="map-caption"><strong>How to read this:</strong> arrows show technical sequence, not time or effect size. The applicant checkpoints are separate questions, not aligned stages. Units: not applicable; no measured, estimated or projected values are plotted. This comparison does not establish that a particular LinkedIn deployment is covered by NYC law.</figcaption>
+      </figure>
+      <p class="view-status" id="view-status" role="status" aria-live="polite" aria-atomic="true">Showing both perspectives.</p>
+    </section>
+
+    <section class="evidence" id="evidence" aria-labelledby="evidence-heading">
+      <div class="evidence-heading"><span class="mono section-number">02 / The evidence</span><h2 id="evidence-heading">Two things to take away.</h2></div>
+      <div class="evidence-grid">
+        <article class="finding"><span class="finding-mark" aria-hidden="true">a.</span><div><h3>Matching is a sequence of judgments.</h3><p>LinkedIn describes multiple retrieval strategies followed by blending, ranking and LLM-based candidate evaluation before results reach a recruiter.</p><a href="https://www.linkedin.com/blog/engineering/ai/semantic-search-for-ai-agents-at-scale-retrieval-and-ranking-for-linkedins-hiring-assistant">LinkedIn Engineering · June 11, 2026 ↗</a></div></article>
+        <article class="finding"><span class="finding-mark" aria-hidden="true">b.</span><div><h3>Visibility depends on the use case.</h3><p>NYC requires audits and notices for covered assessment uses, but its FAQ excludes sourcing people who have not applied for a specific position from those requirements.</p><a href="https://www.nyc.gov/site/dca/businesses/faq-automated-employment-decision-tools.page">NYC DCWP · June 29, 2023 · Overview ↗</a></div></article>
+      </div>
+    </section>
+
+    <section class="discussion" aria-labelledby="discussion-heading">
+      <div><span class="mono section-number">03 / Lecture discussion</span><h2 id="discussion-heading">Who gets to<br>be visible?</h2></div>
+      <div><p class="question">If a system shapes who is discovered before anyone applies, what transparency and opportunity to challenge it should job seekers have?</p><p class="context">An ethical question about fairness, transparency and accountability—not a claim about an existing legal right.</p></div>
+    </section>
+
+    <section class="notes" id="sources" aria-labelledby="sources-heading">
+      <div><span class="mono section-number">04 / Read more closely</span><h2 id="sources-heading">Check the sources.<br>Keep the limits.</h2><p class="notes-intro">Original sources and the boundaries of this comparison.</p></div>
+      <div>
+        <details><summary>What this comparison can—and cannot—tell you</summary><div class="note-content">
+          <p><strong>The limitation.</strong> A vendor’s architecture description and a city’s oversight rules answer different questions. Neither demonstrates that a particular applicant received a fair outcome.</p>
+          <p><strong>An audit is not an outcome guarantee.</strong> NYC’s FAQ says the law does not require specific actions based on audit results. Other anti-discrimination laws still apply.</p>
+          <p><strong>A perspective easy to miss.</strong> Someone who is never surfaced during sourcing may never become an applicant. Consider their visibility alongside the experience of people already being assessed.</p>
+        </div></details>
+        <details><summary>Reveal the source note</summary><div class="note-content">
+          <p><strong>Evidence boundary.</strong> This alternative reuses the primary-source notes verified for the first version. No new research or performance claims have been added. The outdated 2019 LinkedIn article is excluded.</p>
+          <p><strong>Dates and places.</strong> LinkedIn’s October 21, 2025 and June 11, 2026 articles describe its platform engineering, without a single geographic study population. The June 29, 2023 NYC FAQ describes New York City’s jurisdiction. Dates label sources; they are not chart values.</p>
+          <p><strong>No invented measurements.</strong> The diagram is qualitative. It includes no outcome estimates, projections or numerical scores, and presents no proposals as established facts.</p>
+        </div></details>
+        <details><summary>Original URLs & further context</summary><div class="note-content"><ol class="sources">
+          <li><a href="https://www.linkedin.com/blog/engineering/ai/how-we-engineered-linkedins-hiring-assistant">How we engineered LinkedIn’s Hiring Assistant ↗</a><span>LinkedIn Engineering · October 21, 2025 · Vendor primary source</span></li>
+          <li><a href="https://www.linkedin.com/blog/engineering/ai/semantic-search-for-ai-agents-at-scale-retrieval-and-ranking-for-linkedins-hiring-assistant">Semantic Search for AI Agents at Scale ↗</a><span>LinkedIn Engineering · June 11, 2026 · Vendor primary source</span></li>
+          <li><a href="https://www.nyc.gov/site/dca/businesses/faq-automated-employment-decision-tools.page">Automated Employment Decision Tools FAQ ↗</a><span>NYC DCWP · June 29, 2023 · Regulator primary source</span></li>
+          <li><a href="https://www.nist.gov/itl/ai-risk-management-framework">AI Risk Management Framework ↗</a><span>NIST · 2023 · Optional risk-management context, not evidence of LinkedIn compliance</span></li>
+        </ol></div></details>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap footer-inner"><strong>Automated Talent Systems / Behind the shortlist</strong><span>Works offline · Only source links use the internet</span></div></footer>
+
+  <script>
+    (() => {
+      'use strict';
+      const control = document.querySelector('.view-control');
+      const buttons = [...control.querySelectorAll('button')];
+      const system = document.getElementById('system-lens');
+      const oversight = document.getElementById('oversight-lens');
+      const status = document.getElementById('view-status');
+      const messages = {
+        both: 'Showing both perspectives.',
+        system: 'Showing the LinkedIn technical process.',
+        oversight: 'Showing the NYC applicant oversight checkpoints.'
+      };
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const view = button.dataset.view;
+          buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+          system.hidden = view === 'oversight';
+          oversight.hidden = view === 'system';
+          status.textContent = messages[view];
+        });
+      });
+      control.hidden = false;
+    })();
+  </script>
+</body>
+</html>
